@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import userRoutes from "./routes/user-route.js";
 import TheatreRoutes from "./routes/theatre.route.js";
 import MovieRoutes from "./routes/movie.route.js";
+import ShowRoutes from "./routes/show-route.js";
 import "dotenv/config";
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use("/api/user", userRoutes);
 app.use("/api/theatre", TheatreRoutes);
 app.use("/api/movie", MovieRoutes);
+app.use("/api/show", ShowRoutes);
 
 app.all("*", (req, res) => {
   res.status(404).send("Page not found");
