@@ -8,7 +8,7 @@ const Header = () => {
         <div className="flex w-[321px] justify-between text-[20px]">
           <ul className="head-ul flex flex-row justify-evenly w-full list-none items-center">
             <li>
-              <Link to="/admin">Admin</Link>
+              <Link to="/admin/movieslist">Admin</Link>
             </li>
             <li>
               <Link className="text-white" to="/owner">

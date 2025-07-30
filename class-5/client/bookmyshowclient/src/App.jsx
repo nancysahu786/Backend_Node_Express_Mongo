@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import Admin from "./pages/Admin";
 import Owner from "./pages/Owner";
 import PageNotFound from "./pages/PageNotFound";
+
 function App() {
   return (
     <>
@@ -16,9 +17,9 @@ function App() {
           <Route path="/" element={<MovieList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/movieslist" element={<Admin />} />
           <Route path="/owner" element={<Owner />} />
-          <Route path="/" element={<PageNotFound />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </>

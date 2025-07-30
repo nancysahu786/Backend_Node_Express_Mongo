@@ -1,10 +1,40 @@
 import { useState } from "react";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 const Admin = () => {
   const [open, setOpen] = useState(false);
   const openModal = () => {
     setOpen(true);
   };
+
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Modal heading
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Centered Modal</h4>
+          <p>
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
+            ac consectetur ac, vestibulum at eros.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={props.onHide}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 
   return (
     <>
@@ -27,28 +57,7 @@ const Admin = () => {
           </div>
         </div>
       </div>
-      {/* ✅ Modal */}
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md text-[black] bg-[white] ">
-            <h2 className="text-xl font-bold mb-4">Add Theatre</h2>
-            <p className="text-gray-600 mb-4">
-              You can add a new theatre here.
-            </p>
-            <div className="flex justify-end gap-2">
-              <button
-                className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </button>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+
       <table className="table-auto text-left text-sm w-[92vw] px-4 py 6 rounded-[10px] mx-[20px] my-[20px] shadow-[0_4px_20px_rgba(16,1,1,0.9)] bg-[white] text-[black] p-[10px] ">
         <thead className="bg-gray-200">
           <tr>
@@ -69,6 +78,8 @@ const Admin = () => {
           </tr>
         </tbody>
       </table>
+
+      <MyVerticallyCenteredModal show={open} onHide={() => setOpen(false)} />
     </>
   );
 };
