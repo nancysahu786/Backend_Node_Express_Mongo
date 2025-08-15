@@ -12,6 +12,7 @@ import ShowRoutes from "./routes/show-route.js";
 import BookingRoutes from "./routes/booking.route.js";
 import "dotenv/config";
 import cors from "cors";
+import errorMinddleware from "./middleware/errorMiddleware.js";
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -33,6 +34,7 @@ app.all("*", (req, res) => {
   res.status(404).send("Page not found");
 });
 
+app.use(errorMinddleware);
 app.listen(5000, () => {
   console.log("Server is listening on port 5000....");
   connectToDB();

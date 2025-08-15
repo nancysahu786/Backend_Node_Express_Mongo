@@ -1,8 +1,11 @@
 import Movie from "../model/movie.model.js";
 
-export const addMovie = async (req, res) => {
+export const addMovie = async (req, res, next) => {
   try {
     const movieData = req.body;
+    if (!movieData.title) {
+      return next(new Error("Movie data is required"));
+    }
     const movieDetails = await Movie.create(movieData);
     res.status(200).send({
       success: true,
