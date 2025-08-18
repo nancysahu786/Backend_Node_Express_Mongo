@@ -22,10 +22,20 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        const token = res.headers.get("Jwttoken");
+        console.log("token from headers => ", token);
+
+        window.localStorage.setItem("token", token);
+        return res.json();
+      })
       .then((data) => {
         console.log("user data", data);
-        navigate("/");
+        if (data.status == true) {
+          navigate("/");
+        } else {
+          window.alert(data.message);
+        }
       })
       .catch((error) => {
         window.alert(error.message);

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 dotenv.config();
 const AuthMiddleware = async (req, res, next) => {
   try {
-    const getToken = req.header("jwtToken");
+    const getToken = req.headers.jwttoken;
     const userData = jwt.verify(getToken, process.env.JWT_SECRET_KEY);
     if (userData) {
       req.user = userData;

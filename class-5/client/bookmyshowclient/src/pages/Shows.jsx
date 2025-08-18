@@ -3,18 +3,20 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-modal";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { useNavigate } from "react-router-dom";
-const Owner = () => {
+import { useNavigate, useParams } from "react-router-dom";
+const Shows = () => {
   const [open, setOpen] = useState(false);
-  const [theatres, setTheatres] = useState([]);
+  const [shows, setShows] = useState([]);
   const [newTheatre, setNewTheatre] = useState({
     name: "",
-    location: "",
-    email: "",
-    phone: "",
-    isActive: "",
+    movie: "",
+    date: "",
+    time: "",
+    totalSeats: 0,
+    ticketPrice: 0,
   });
   const navigate = useNavigate();
+  const { theatreId } = useParams();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -26,14 +28,17 @@ const Owner = () => {
   };
 
   // get all movies
-  const fetchTheatres = async () => {
-    const response = await fetch("http://localhost:5000/api/theatre/", {
-      headers: {
-        jwttoken: window.localStorage.getItem("token"),
-      },
-    });
+  const fetchShows = async () => {
+    const response = await fetch(
+      `http://localhost:5000/api/show?theatre=${theatreId}`,
+      {
+        headers: {
+          jwttoken: window.localStorage.getItem("token"),
+        },
+      }
+    );
     const data = await response.json();
-    setTheatres(data);
+    setShows(data.filterDetails);
   };
 
   const handleAddTheatre = async () => {
@@ -79,7 +84,7 @@ const Owner = () => {
   };
 
   useEffect(() => {
-    fetchTheatres();
+    fetchShows();
   }, []);
 
   const customStyles = {
@@ -106,14 +111,14 @@ const Owner = () => {
               id="price"
               name="price"
               type="text"
-              placeholder="Search by theatre name"
+              placeholder="Search by Show "
               className="flex-[0.7] rounded-[10px] p-7 shadow-[0_4px_20px_rgba(16,1,1,0.9)] bg-[white] border-white-100"
             />
             <button
               className="bg-blue-500 text-white px-2 py-1 rounded "
               onClick={openModal}
             >
-              Add Theatre
+              Add Show
             </button>
           </div>
         </div>
@@ -123,31 +128,24 @@ const Owner = () => {
         <thead className="bg-gray-200">
           <tr>
             <th className="px-4 py-2">Name</th>
-            <th className="px-4 py-2">Location</th>
-            <th className="px-4 py-2">Phone</th>
-            <th className="px-4 py-2">Email</th>
-            <th className="px-4 py-2">Shows</th>
+            <th className="px-4 py-2">Movie</th>
+            <th className="px-4 py-2">Date</th>
+            <th className="px-4 py-2">Time</th>
+            <th className="px-4 py-2">Total Seats</th>
+            <th className="px-4 py-2">Price</th>
             <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {theatres.map((theatre, index) => (
+          {shows.map((show, index) => (
             <>
               <tr key={index} className="bg-white border-b">
-                <td className="px-4 py-2">{theatre.name}</td>
-                <td className="px-4 py-2">{theatre.location}</td>
-                <td className="px-4 py-2">{theatre.email}</td>
-                <td className="px-4 py-2">{theatre.phone}</td>
-                <td>
-                  <button
-                    onClick={() =>
-                      navigate(`/owner/theatres/${theatre._id}/shows`)
-                    }
-                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
-                  >
-                    Shows
-                  </button>
-                </td>
+                <td className="px-4 py-2">{show.name}</td>
+                <td className="px-4 py-2">{show.movie}</td>
+                <td className="px-4 py-2">{show.date}</td>
+                <td className="px-4 py-2">{show.time}</td>
+                <td className="px-4 py-2">{show.totalSeats}</td>
+                <td className="px-4 py-2">{show.ticketPrice}</td>
 
                 <td className="flex gap-2">
                   <button className="bg-yellow-400 text-white">Edit</button>
@@ -238,4 +236,4 @@ const Owner = () => {
   );
 };
 
-export default Owner;
+export default Shows;

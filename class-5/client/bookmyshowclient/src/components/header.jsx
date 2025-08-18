@@ -11,7 +11,7 @@ const Header = () => {
               <Link to="/admin/movieslist">Admin</Link>
             </li>
             <li>
-              <Link className="text-white" to="/owner">
+              <Link className="text-white" to="/owner/theatres">
                 Owner
               </Link>
             </li>

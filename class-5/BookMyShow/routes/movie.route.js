@@ -9,11 +9,20 @@ import {
   updateMovie,
 } from "../controllers/movie.controller.js";
 import isAdminMiddleware from "../middleware/isAdmin-middleware.js";
+import multer from "multer";
 
 const router = express.Router();
+const upload = multer({ dest: "uploads/" }); // or your custom storage
 
 // add movie
-router.post("/", AuthMiddleware, isAdminMiddleware, addMovie);
+router.post(
+  "/",
+  upload.single("poster"),
+
+  AuthMiddleware,
+  isAdminMiddleware,
+  addMovie
+);
 
 // get Movie by id
 

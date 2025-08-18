@@ -2,6 +2,7 @@ import Movie from "../model/movie.model.js";
 
 export const addMovie = async (req, res, next) => {
   try {
+    req.body.poster = req.file.path;
     const movieData = req.body;
     if (!movieData.title) {
       return next(new Error("Movie data is required"));
